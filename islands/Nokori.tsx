@@ -38,8 +38,7 @@ function Nokori(props: NokoriProps) {
   const calculateProgression = () => {
     // Validate dates
     if (!pastDate || !futureDate) {
-      alert('過去日と未来日の両方を入力してください');
-      return;
+      return null;
     }
 
     const past = new Date(pastDate);
@@ -66,12 +65,10 @@ function Nokori(props: NokoriProps) {
       100
     );
 
-    setProgressInfo({
-      totalWeekdays,
-      elapsedWeekdays,
-      progressPercentage
-    });
+    return { totalWeekdays, elapsedWeekdays, progressPercentage };
   };
+
+  const result = calculateProgression();
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -102,21 +99,15 @@ function Nokori(props: NokoriProps) {
           className="w-full p-2 border rounded"
         />
       </div>
+ 
 
-      <button 
-        onClick={calculateProgression}
-        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mb-4"
-      >
-        進捗を計算
-      </button>
-
-      {progressInfo && (
+      {result && (
         <div className="mt-4">
           <div className="mb-2">
             <div className="w-full bg-gray-200 rounded-full h-4">
               <div 
                 className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
-                style={{ width: `${progressInfo.progressPercentage}%` }}
+                style={{ width: `${result.progressPercentage}%` }}
               ></div>
             </div>
           </div>
@@ -124,12 +115,12 @@ function Nokori(props: NokoriProps) {
           <div className="text-center">
             <p className="text-lg">
               進捗: <span className="font-bold text-blue-600">
-                {progressInfo.progressPercentage.toFixed(2)}%
+                {result.progressPercentage.toFixed(2)}%
               </span>
             </p>
             <p className="text-sm text-gray-600">
-              経過平日: {progressInfo.elapsedWeekdays}日 / 
-              総平日: {progressInfo.totalWeekdays}日
+              経過平日: {result.elapsedWeekdays}日 / 
+              総平日: {result.totalWeekdays}日
             </p>
           </div>
         </div>
