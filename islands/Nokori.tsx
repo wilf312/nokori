@@ -119,8 +119,16 @@ function Nokori(props: NokoriProps) {
               </span>
             </p>
             <p className="text-sm text-gray-600">
-              経過平日: {result.elapsedWeekdays}日 / 
-              総平日: {result.totalWeekdays}日
+              経過平日: {
+                result.elapsedWeekdays >= 120 
+                  ? `${Math.floor(result.elapsedWeekdays / 20)}ヶ月` 
+                  : `${result.elapsedWeekdays}日`
+              } / 
+              総平日: {
+                result.totalWeekdays >= 120 
+                  ? `${Math.floor(result.totalWeekdays / 20)}ヶ月` 
+                  : `${result.totalWeekdays}日`
+              }
             </p>
           </div>
         </div>
