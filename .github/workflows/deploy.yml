@@ -32,5 +32,3 @@ jobs:
           project: "okadagenya-nokori-83"
           entrypoint: "main.ts"
           root: "."
-          
-          
