@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "playwright": "npm:playwright@latest"
+  },
+  "tasks": {
+    "test": "deno test -A --unstable"
+  }
+}
