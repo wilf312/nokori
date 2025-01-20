@@ -10,7 +10,8 @@
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
-    "test:e2e": "deno test -A  "
+    "test:e2e": "deno test -A  ",
+    "test:full": "deno task test:start & sleep 5 && deno task test:e2e && pkill -f 'deno run -A --watch=static/,routes/ dev.ts' && echo 'done'"
   },
   "lint": {
     "rules": {
