@@ -9,9 +9,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 2  # ジョブ全体のタイムアウトを2分に設定
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/deno.json') }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
 
       - name: Set up Deno
         uses: denoland/setup-deno@909cc5acb0fdd60627fb858598759246509fa755 # 2.0.2
