@@ -13,9 +13,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('**/deno.json') }}
+        # with:
+        #   path: ~/.cache/ms-playwright
+        #   key: playwright-${{ runner.os }}-${{ hashFiles('**/deno.json') }}
 
       - name: Install Playwright browsers
         run: cd ./e2e && npx playwright install chromium
