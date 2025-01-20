@@ -18,7 +18,7 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('**/deno.json') }}
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: cd ./e2e && npx playwright install chromium
 
       - name: Set up Deno
         uses: denoland/setup-deno@909cc5acb0fdd60627fb858598759246509fa755 # 2.0.2
