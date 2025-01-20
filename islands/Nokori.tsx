@@ -4,6 +4,7 @@ interface NokoriProps {
 }
 
 import { useState } from "preact/hooks";
+import qs from "npm:qs";
 
 // Utility function to calculate weekdays between two dates
 const calculateWeekdays = (startDate: Date, endDate: Date): number => {
@@ -39,7 +40,7 @@ function Nokori(props: NokoriProps) {
 
     // Validate date order
     if (past >= future) {
-      alert("過去日は未来日より前の日付にしてください");
+      // alert("過去日は未来日より前の日付にしてください");
       return;
     }
 
@@ -62,6 +63,19 @@ function Nokori(props: NokoriProps) {
 
   const result = calculateProgression();
 
+  const updateDatesQuery = (
+    props: { pastDate: string; futureDate: string },
+  ) => {
+    if (props.pastDate || props.futureDate) {
+      const _pastDate = props.pastDate ? { pastDate: props.pastDate } : {};
+      const _futureDate = props.futureDate
+        ? { futureDate: props.futureDate }
+        : {};
+      const query = qs.stringify({ ..._pastDate, ..._futureDate });
+      history.replaceState(null, "", `${window.location.pathname}?${query}`);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-4 text-center">平日進捗計算</h1>
@@ -74,7 +88,14 @@ function Nokori(props: NokoriProps) {
           type="date"
           id="pastDate"
           value={pastDate}
-          onChange={(e) => setPastDate(e.target.value)}
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            const date = new Date(target.value);
+            if (!Number.isNaN(date.getTime())) {
+              setPastDate(target.value);
+              updateDatesQuery({ pastDate: target.value, futureDate });
+            }
+          }}
           className="w-full p-2 border rounded"
         />
       </div>
@@ -87,7 +108,14 @@ function Nokori(props: NokoriProps) {
           type="date"
           id="futureDate"
           value={futureDate}
-          onChange={(e) => setFutureDate(e.target.value)}
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            const date = new Date(target.value);
+            if (!Number.isNaN(date.getTime())) {
+              setFutureDate(target.value);
+              updateDatesQuery({ pastDate, futureDate: target.value });
+            }
+          }}
           className="w-full p-2 border rounded"
         />
       </div>
