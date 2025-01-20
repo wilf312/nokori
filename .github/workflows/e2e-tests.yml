@@ -28,8 +28,5 @@ jobs:
       - name: Install dependencies
         run: deno cache **/*.ts **/*.tsx
 
-      - name: Install Playwright browsers
-        run: npx playwright install
-
       - name: Run E2E tests
         run: deno task test:full
